@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_login_id"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.startup_panels.Login">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/fragment_login_login_btn_id"
+            android:layout_width="154dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="16dp"
+            android:text="LOGIN"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_login_password_textview_id"
+            app:layout_constraintHorizontal_bias="0.491"
+            app:layout_constraintStart_toStartOf="@+id/fragment_login_password_textview_id"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_login_password_textview_id" />
+
+        <EditText
+            android:id="@+id/fragment_login_login_textview_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="170dp"
+            android:layout_marginEnd="8dp"
+            android:ems="10"
+            android:hint="Enter your login"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.503"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/fragment_login_password_textview_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:hint="Enter your password"
+            android:inputType="textPassword"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_login_login_textview_id"
+            app:layout_constraintStart_toStartOf="@+id/fragment_login_login_textview_id"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_login_login_textview_id" />
+
+        <TextView
+            android:id="@+id/fragment_login_register_textview_asbutton_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Don't You have an account? Register now"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_login_login_btn_id"
+            app:layout_constraintStart_toStartOf="@+id/fragment_login_login_btn_id"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_login_login_btn_id" />
+    </android.support.constraint.ConstraintLayout>
+</FrameLayout>
