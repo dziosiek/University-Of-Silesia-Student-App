@@ -1,8 +1,9 @@
 package com.example.adam.universityofsilesiaapp.resources;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class User {
+public class User implements Serializable {
     Integer id;
     String login,firstname,lastname;
     List<UserGroups> groups;

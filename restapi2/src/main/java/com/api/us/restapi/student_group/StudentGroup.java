@@ -1,7 +1,9 @@
 package com.api.us.restapi.student_group;
 
+import com.api.us.restapi.events.Event;
 import com.api.us.restapi.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 import javax.persistence.*;
@@ -26,8 +28,13 @@ public class StudentGroup {
                     CascadeType.MERGE
             },
             mappedBy = "groupList")
-    @JsonIgnoreProperties("groupList")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler","groupList"})
     List<User> userList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "group")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler","group"})
+    List<Event> events = new ArrayList<>();
+
 
 
     public List<User> getUserList() {
@@ -65,5 +72,12 @@ public class StudentGroup {
         this.year = year;
     }
 
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
+    }
 
 }

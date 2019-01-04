@@ -1,8 +1,9 @@
 package com.api.us.restapi.user;
 
+import com.api.us.restapi.events.Event;
 import com.api.us.restapi.student_group.StudentGroup;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import net.minidev.json.annotate.JsonIgnore;
+import com.fasterxml.jackson.annotation.*;
+
 
 import javax.persistence.*;
 import javax.validation.Valid;
@@ -39,6 +40,8 @@ public class User {
     @JsonIgnoreProperties("userList")
     List<StudentGroup> groupList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user")
+    List<Event> events = new ArrayList<>();
 
     public User() {
     }
@@ -77,10 +80,13 @@ public class User {
         this.login = login;
     }
 
+
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
 
+    @JsonProperty
     public void setPassword(String password) {
         this.password = password;
     }
@@ -110,5 +116,13 @@ public class User {
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
+    }
+
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
     }
 }

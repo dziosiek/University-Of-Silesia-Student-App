@@ -1,7 +1,5 @@
 package com.example.adam.universityofsilesiaapp.fragments.main_panels;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,40 +10,60 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.GridView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.adam.universityofsilesiaapp.MainActivity;
 import com.example.adam.universityofsilesiaapp.R;
+import com.example.adam.universityofsilesiaapp.fragments.main_panels.events.EventsPanel;
+import com.example.adam.universityofsilesiaapp.fragments.main_panels.groups.Groups;
+import com.example.adam.universityofsilesiaapp.fragments.main_panels.groups.alerts.NoGroupAlert;
+import com.example.adam.universityofsilesiaapp.fragments_replacement.FragmentReplacement;
+import com.example.adam.universityofsilesiaapp.resources.User;
+import com.example.adam.universityofsilesiaapp.resources.UserGroups;
+import com.example.adam.universityofsilesiaapp.variables.GlobalVariables;
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class StudentPanel extends Fragment {
 
-    GridView gridView;
+    User me;
+    Integer selectedGroup;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
-        gridView = (GridView) getView().findViewById(R.id.student_panel_gridview);
-
-
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v,
-                                    int position, long id) {
-                Toast.makeText(getContext(), "id:"+id + position,
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()){
-            case R.id.add_specialization:
-                Toast.makeText(getContext(),"Adding Spec",Toast.LENGTH_SHORT).show();
+            case R.id.my_groups:
+                Toast.makeText(getContext(),"myGroups",Toast.LENGTH_SHORT).show();
+                getGroupsListFragment();
+                break;
+            case R.id.events:
+                Toast.makeText(getContext(),"Events",Toast.LENGTH_SHORT).show();
+                getEvents();
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -53,13 +71,31 @@ public class StudentPanel extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu,menu);
+        inflater.inflate(R.menu.main_options_menu,menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
+        me = FragmentReplacement.<User>getObjectFromBundle(getArguments(),"me");
+
+        if(me.getGroups().isEmpty()){
+            new NoGroupAlert().show(getFragmentManager(),"NoGroupAlert");
+            getGroupsListFragment();
+        }
+        else {
+            selectedGroup= FragmentReplacement.<Integer>getObjectFromBundle(getArguments(),"selectedGroup");
+            Toast.makeText(getContext(),me.getGroups().get(selectedGroup).getSpecialization(),Toast.LENGTH_SHORT).show();
+            ((MainActivity)getContext()).setTitle(me.getGroups().get(selectedGroup).getSpecialization());
+
+        }
+
+
+
+
 
     }
 
@@ -69,6 +105,63 @@ public class StudentPanel extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_student_panel, container, false);
     }
+
+    public void getGroupsListFragment(){
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("me", me);
+        FragmentReplacement.pushFragment(getActivity(),R.id.startup_frame_layout_id, new Groups(), bundle);
+
+//        RequestQueue queue = Volley.newRequestQueue(getContext());
+//
+//// Request a string response from the provided URL.
+//        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, GlobalVariables.getApiUrl()+"/jpa/student-groups", null, new Response.Listener<JSONArray>() {
+//            @Override
+//            public void onResponse(JSONArray response) {
+//                Bundle bundle = new Bundle();
+//                Gson gson = new Gson();
+//                List<UserGroups> list = new ArrayList<UserGroups>();
+//                for (int i = 0; i < response.length(); i++) {
+//                    try {
+//                        UserGroups group = gson.fromJson(response.getJSONObject(i).toString(),UserGroups.class);
+//                        list.add(group);
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//
+//                bundle.putSerializable("groupsList", (Serializable) list);
+//                bundle.putSerializable("me", me);
+////                Toast.makeText(getContext(),"ok",Toast.LENGTH_SHORT).show();
+//                FragmentReplacement.pushFragment(getActivity(),R.id.startup_frame_layout_id, new Groups(), bundle);
+//
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Toast.makeText(getContext(),"error",Toast.LENGTH_SHORT).show();
+//
+//            }
+//        }){
+//            @Override
+//            public Map<String, String> getHeaders() throws AuthFailureError {
+//                Map headers = new HashMap();
+//                headers.put("Content-Type", "application/json");
+//                return headers;
+//            }
+//        };
+//        queue.add(request);
+
+
+    }
+
+    public void getEvents(){
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("me", me);
+        bundle.putInt("selectedGroup",selectedGroup);
+        FragmentReplacement.pushFragment(getActivity(),R.id.startup_frame_layout_id,new EventsPanel(),bundle);
+    }
+
+
 
 
 

@@ -2,6 +2,7 @@ package com.example.adam.universityofsilesiaapp.fragments_replacement;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -22,5 +23,14 @@ public class FragmentReplacement {
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.startup_frame_layout_id, fragment);
         transaction.commit();
+    }
+    public static void pushFragment(Activity activity, int id, Fragment fragment, Bundle bundle) {
+        fragment.setArguments(bundle);
+        pushFragment(activity, id, fragment);
+
+    }
+    public static <T>  T getObjectFromBundle(Bundle bundle, String key){
+        T t = (T) bundle.getSerializable(key);
+        return t;
     }
 }

@@ -1,12 +1,10 @@
 package com.example.adam.universityofsilesiaapp.fragments.startup_panels;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -21,9 +19,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.adam.universityofsilesiaapp.MainActivity;
 import com.example.adam.universityofsilesiaapp.R;
 import com.example.adam.universityofsilesiaapp.fragments.main_panels.StudentPanel;
+
 import com.example.adam.universityofsilesiaapp.fragments_replacement.FragmentReplacement;
 import com.example.adam.universityofsilesiaapp.resources.User;
 import com.example.adam.universityofsilesiaapp.resources.UserGroups;
@@ -77,9 +75,9 @@ public class Login extends Fragment {
 //    }
 //
 //    @Override
-//    public void onPrepareOptionsMenu(Menu menu) {
-//        menu.findItem(R.id.add_specialization).setVisible(false);
-//        super.onPrepareOptionsMenu(menu);
+//    public void onPrepareOptionsMenu(Menu main_options_menu) {
+//        main_options_menu.findItem(R.id.add_specialization).setVisible(false);
+//        super.onPrepareOptionsMenu(main_options_menu);
 //    }
     //Hiding Options
 
@@ -117,13 +115,21 @@ public class Login extends Fragment {
                             List<UserGroups> userGroups = new ArrayList<>(Arrays.asList(array));
                             user.setGroups(userGroups);
 
-                            Toast.makeText(getContext(),user.getGroups().get(0).getSpecialization(),Toast.LENGTH_SHORT).show();
+
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("me",user);
+                            bundle.putInt("selectedGroup",0);
+
+                            FragmentReplacement.pushFragment(getActivity(),
+                                    R.id.startup_frame_layout_id, new StudentPanel(), bundle);
+
+//                            Toast.makeText(getContext(),user.getGroups().get(0).getSpecialization(),Toast.LENGTH_SHORT).show();
 
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
 
-                        FragmentReplacement.pushFragment(getActivity(), R.id.startup_frame_layout_id,new StudentPanel());
+
 
 
 

@@ -1,7 +1,7 @@
 package com.example.adam.universityofsilesiaapp.variables;
 
 public abstract class GlobalVariables {
-    private static String API_URL = "http://192.168.43.66:8080";
+    private static String API_URL = "http://192.168.1.104:8080";
     private static Integer userId = null;
     private static String token= null;
 

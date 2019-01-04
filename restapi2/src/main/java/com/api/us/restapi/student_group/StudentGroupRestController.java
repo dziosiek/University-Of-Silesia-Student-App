@@ -1,5 +1,7 @@
 package com.api.us.restapi.student_group;
 
+import com.api.us.restapi.events.Event;
+import com.api.us.restapi.events.EventRepository;
 import com.api.us.restapi.my.exceptions.NotFoundException;
 import com.api.us.restapi.user.User;
 import com.api.us.restapi.user.UserRepository;
@@ -13,6 +15,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +26,8 @@ public class StudentGroupRestController {
     UserRepository userRepository;
     @Autowired
     StudentGroupRepository studentGroupRepository;
+    @Autowired
+    EventRepository eventRepository;
 
     @GetMapping("jpa/student-groups")
     public List<StudentGroup> getStudentGroup(){
@@ -49,5 +55,67 @@ public class StudentGroupRestController {
             throw new NotFoundException("id group:"+Integer.toString(id) +" not found");
         }
         return byId.get().getUserList();
+    }
+    @GetMapping("jpa/student-groups/{id}/events")
+    public List<Event> getEventsByGroupId(@PathVariable Integer id){
+        Optional<StudentGroup> byId= studentGroupRepository.findById(id);
+        if(!byId.isPresent()){
+            throw new NotFoundException("id:"+id+" not found");
+        }
+
+        return byId.get().getEvents();
+    }
+    @PostMapping("jpa/student-groups/{groupId}/events")
+    public ResponseEntity<Object> addEvent(@PathVariable Integer groupId,
+                                           @RequestBody Event event, @RequestParam("user_id") Integer userId){
+        Optional<StudentGroup> studentGroupById= studentGroupRepository.findById(groupId);
+        Optional<User> userById = userRepository.findById(userId);
+        if(!studentGroupById.isPresent()){
+            throw new NotFoundException("id:"+groupId+" not found");
+        }
+        if(!userById.isPresent()){
+            throw new NotFoundException("id:"+userById+" not found");
+        }
+
+        event.setGroup(studentGroupById.get());
+        event.setUser(userById.get());
+        event.setDate(new Date());
+        Event eventSaved = eventRepository.save(event);
+
+        Resource<Event> resource = new Resource<>(eventSaved);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(eventSaved.getId()).toUri();
+        return ResponseEntity.created(location).body(eventSaved);
+
+
+    }
+
+    @GetMapping("jpa/student-groups/{groupId}/events/{eventId}")
+    public Event getEvent(@PathVariable Integer groupId, @PathVariable Integer eventId) {
+        Optional<StudentGroup> studentGroupById = studentGroupRepository.findById(groupId);
+        Optional<Event> eventById = eventRepository.findById(eventId);
+        if (!studentGroupById.isPresent()) {
+            throw new NotFoundException("group id:" + groupId + " not found");
+        }
+        if (!eventById.isPresent()) {
+            throw new NotFoundException("event id:" + eventId + " not found");
+        }
+
+
+        return eventById.get();
+    }
+    @DeleteMapping("jpa/student-groups/{groupId}/events/{eventId}")
+    public ResponseEntity<Object> deleteEvent(@PathVariable Integer groupId, @PathVariable Integer eventId){
+        Optional<Event> eventById = eventRepository.findById(eventId);
+        Optional<StudentGroup> groupById= studentGroupRepository.findById(groupId);
+        if(!eventById.isPresent()){
+            throw new NotFoundException("event id:"+eventId+" not found");
+        }
+        if(!groupById.isPresent()){
+            throw new NotFoundException("group id:"+groupId+" not found");
+        }
+        eventRepository.delete(eventById.get());
+//        groupById.get().getEvents().remove(eventById.get());
+//        studentGroupRepository.save(groupById.get());
+        return ResponseEntity.noContent().build();
     }
 }

@@ -21,6 +21,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
 
+import static java.lang.Integer.parseInt;
+
 @RestController
 public class UsersRestController {
 
@@ -110,7 +112,8 @@ public class UsersRestController {
     }
 
     @PostMapping("jpa/users/{user_id}/groups")
-    public ResponseEntity<Object> addNewGroup(@PathVariable int user_id, @RequestParam("group_id") Integer groupId) throws URISyntaxException {
+    public ResponseEntity<Object> addNewGroup(@PathVariable int user_id, @RequestParam("group_id") String group_id) throws URISyntaxException {
+        Integer groupId = Integer.parseInt(group_id);
         Optional<StudentGroup> sgbyId = studentGroupRepository.findById(groupId);
         if(!sgbyId.isPresent()){
             throw new NotFoundException("group id:"+Integer.toString(groupId) +" not found");
@@ -119,6 +122,9 @@ public class UsersRestController {
 
         if(!ubyId.isPresent()){
             throw new NotFoundException("user id:"+Integer.toString(user_id) +" not found");
+        }
+        if(ubyId.get().getGroupList().contains(sgbyId.get())){
+            throw new ConflictException("user id:"+Integer.toString(user_id) +" is currently in this group");
         }
 
         ubyId.get().getGroupList().add(sgbyId.get());
@@ -137,10 +143,23 @@ public class UsersRestController {
             throw new NotFoundException("user id:"+Integer.toString(user_id) +" not found");
         }
 
-
-
-
         return ubyId.get().getGroupList();
+    }
+
+    @DeleteMapping("jpa/users/{user_id}/groups/{group_id}")
+    public ResponseEntity<Object> deleteGroup(@PathVariable Integer user_id, @PathVariable Integer group_id){
+        Optional<User> uById = userRepository.findById(user_id);
+        Optional<StudentGroup> sgById = studentGroupRepository.findById(group_id);
+        if(!uById.isPresent()){
+            throw new NotFoundException("user id:"+Integer.toString(user_id) +" not found");
+        }
+        if(!sgById.isPresent()){
+            throw new NotFoundException("group id:"+Integer.toString(user_id) +" not found");
+        }
+
+        uById.get().getGroupList().remove(sgById.get());
+        userRepository.save(uById.get());
+        return ResponseEntity.noContent().build();
     }
 
 }

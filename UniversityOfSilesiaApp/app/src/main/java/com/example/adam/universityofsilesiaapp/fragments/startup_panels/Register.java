@@ -74,9 +74,9 @@ public class Register extends Fragment {
 //    }
 //
 //    @Override
-//    public void onPrepareOptionsMenu(Menu menu) {
-//        menu.findItem(R.id.add_specialization).setVisible(false);
-//        super.onPrepareOptionsMenu(menu);
+//    public void onPrepareOptionsMenu(Menu main_options_menu) {
+//        main_options_menu.findItem(R.id.add_specialization).setVisible(false);
+//        super.onPrepareOptionsMenu(main_options_menu);
 //    }
     //Hiding Options
 
