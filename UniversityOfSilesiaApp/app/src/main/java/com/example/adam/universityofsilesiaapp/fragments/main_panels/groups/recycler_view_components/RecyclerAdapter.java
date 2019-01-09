@@ -24,10 +24,7 @@ import java.util.List;
 
 class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
-
-
     TextView specialization,year;
-
     private ItemClickListener itemClickListener;
 
     public RecyclerViewHolder(@NonNull View itemView) {
@@ -36,17 +33,14 @@ class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClick
         year = (TextView) itemView.findViewById(R.id.rw_students_group_year);
         itemView.setOnClickListener(this);
         itemView.setOnLongClickListener(this);
-
     }
 
     public void setItemClickListener(ItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
-
     }
 
     @Override
     public void onClick(View v) {
-
         itemClickListener.onClick(v,getAdapterPosition(),false);
     }
 
@@ -57,7 +51,6 @@ class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClick
     }
 }
 
-
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerViewHolder>{
 
     private List<UserGroups> listData;
@@ -65,18 +58,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerViewHolder>{
     User me;
     private int mode;
 
-
-
-
     public RecyclerAdapter(List<UserGroups> listData, Context context, User me) {
         this.listData = listData;
         this.context = context;
         this.me = me;
-
     }
-
-
-
 
     @NonNull
     @Override
@@ -84,24 +70,17 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerViewHolder>{
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         View itemView = inflater.inflate(R.layout.recycler_view_students_groups,viewGroup,false);
         return new RecyclerViewHolder(itemView);
-
     }
 
     @Override
     public void onBindViewHolder(@NonNull final RecyclerViewHolder recyclerViewHolder, int i) {
-
         recyclerViewHolder.specialization.setText(listData.get(i).getSpecialization());
         recyclerViewHolder.year.setText("year "+listData.get(i).getYear());
-
         recyclerViewHolder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position, boolean isLongClick) {
-
-
-
                 if(isLongClick){
                     UserGroups userGroups = listData.get(position);
-
                     if(mode == RecyclerViewMyConstants.MY_GROUPS_MODE){
                         RemovalFromGroupAlert alert = new RemovalFromGroupAlert();
                         alert.setParams
@@ -111,7 +90,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerViewHolder>{
                                 RecyclerAdapter.this.context,
                                         position);
                         alert.show(((FragmentActivity) context).getSupportFragmentManager(),"RemovalGroupAlert");
-
                     }
                     else if(mode == RecyclerViewMyConstants.ALL_GROUPS_MODE){
                         AddingGroupAlert alert = new AddingGroupAlert();
@@ -119,11 +97,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerViewHolder>{
                                 userGroups.getYear(),me.getId(),listData.get(position).getId());
                         alert.show(((FragmentActivity) context).getSupportFragmentManager(),"AddingGroupAlert");
                     }
-
-
                 }
                 else if(mode ==RecyclerViewMyConstants.MY_GROUPS_MODE){
-
                     Bundle bundle = new Bundle();
                     me.setGroups(listData);
                     bundle.putSerializable("me",me);
@@ -132,9 +107,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerViewHolder>{
                     FragmentReplacement.pushFragment((Activity) context,
                             R.id.startup_frame_layout_id, new StudentPanel(),bundle);
                 }
-
-
-
             }
         });
     }
@@ -155,7 +127,5 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerViewHolder>{
         notifyItemRemoved(position);
         notifyItemRangeChanged(position,listData.size());
     }
-
-
 
 }

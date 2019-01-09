@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 public class RestapiApplication {
 
 	public static void main(String[] args) {
-
 		SpringApplication.run(RestapiApplication.class, args);
 	}
 }

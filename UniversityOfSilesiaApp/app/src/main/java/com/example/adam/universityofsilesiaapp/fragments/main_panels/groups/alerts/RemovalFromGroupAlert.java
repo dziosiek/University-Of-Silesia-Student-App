@@ -49,70 +49,42 @@ public class RemovalFromGroupAlert extends AppCompatDialogFragment {
         this.userGroups = userGroups;
         this.context = context;
         this.position = position;
-
     }
-
-
-
-
-
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
         UserGroups groups = this.userGroups.get(this.position);
-
-
         builder.setTitle("Removal from the group").setMessage("Would you like to delete the group:\n"
                 +groups.getSpecialization()+", year "+groups.getYear())
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         deleteGroup();
-
                     }
                 }).setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
             }
         });
         return builder.create();
     }
-
-
-
-
     public void deleteGroup() {
-
         Toast.makeText(getContext(),adapter.toString(),Toast.LENGTH_SHORT).show();
-
-
-
-
         RequestQueue queue = Volley.newRequestQueue(context);
         String url = "/jpa/users/" + me.getId()+ "/groups/"+this.userGroups.get(this.position).getId();
         Toast.makeText(context, GlobalVariables.getApiUrl() + url, Toast.LENGTH_SHORT).show();
-
-
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.DELETE,
                         GlobalVariables.getApiUrl() + url,
                         null, new Response.Listener<JSONObject>() {
-
                     @Override
                     public void onResponse(JSONObject response) {
                         Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show();
-
-
-
                     }
                 }, new Response.ErrorListener() {
-
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
                         NetworkResponse networkResponse = error.networkResponse;
                         if (networkResponse != null && networkResponse.statusCode == 409) {
                             Toast.makeText(context, "You cannot delete this group", Toast.LENGTH_SHORT).show();
@@ -122,23 +94,15 @@ public class RemovalFromGroupAlert extends AppCompatDialogFragment {
                         else if (networkResponse != null && networkResponse.statusCode == 204) {
                             Toast.makeText(context, "No content", Toast.LENGTH_SHORT).show();
                         }
-
-
                         adapter.removeItem(position);
-                        
                     }
-
-
                 }) {
-
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<String, String>();
                 headers.put("Content-Type", "application/json");
                 return headers;
             }
-
-
         };
 
         queue.add(jsonObjectRequest);

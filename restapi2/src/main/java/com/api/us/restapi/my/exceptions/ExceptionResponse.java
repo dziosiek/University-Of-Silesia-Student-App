@@ -3,6 +3,7 @@ package com.api.us.restapi.my.exceptions;
 import java.util.Date;
 
 public class ExceptionResponse {
+
     Date timestamp;
     String message,details;
 

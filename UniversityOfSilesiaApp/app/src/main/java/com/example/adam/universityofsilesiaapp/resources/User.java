@@ -4,9 +4,11 @@ import java.io.Serializable;
 import java.util.List;
 
 public class User implements Serializable {
+
     Integer id;
     String login,firstname,lastname;
     List<UserGroups> groups;
+
     public User() {
     }
 

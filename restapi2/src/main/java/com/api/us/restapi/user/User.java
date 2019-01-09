@@ -3,20 +3,14 @@ package com.api.us.restapi.user;
 import com.api.us.restapi.events.Event;
 import com.api.us.restapi.student_group.StudentGroup;
 import com.fasterxml.jackson.annotation.*;
-
-
 import javax.persistence.*;
-import javax.validation.Valid;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
 public class User {
-
 
     @Id
     @GeneratedValue
@@ -55,7 +49,6 @@ public class User {
         this.email = email;
     }
 
-
     public List<StudentGroup> getGroupList() {
         return groupList;
     }
@@ -80,7 +73,6 @@ public class User {
         this.login = login;
     }
 
-
     @JsonIgnore
     public String getPassword() {
         return password;
@@ -91,11 +83,9 @@ public class User {
         this.password = password;
     }
 
-
     public Integer getId() {
         return id;
     }
-
 
     public void setId(Integer id) {
         this.id = id;
@@ -104,7 +94,6 @@ public class User {
     public String getFirstname() {
         return firstname;
     }
-
 
     public void setFirstname(String firstname) {
         this.firstname = firstname;

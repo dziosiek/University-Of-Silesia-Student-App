@@ -49,12 +49,10 @@ public class StudentPanel extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()){
             case R.id.my_groups:
                 Toast.makeText(getContext(),"myGroups",Toast.LENGTH_SHORT).show();
@@ -63,9 +61,7 @@ public class StudentPanel extends Fragment {
             case R.id.events:
                 Toast.makeText(getContext(),"Events",Toast.LENGTH_SHORT).show();
                 getEvents();
-
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -78,10 +74,7 @@ public class StudentPanel extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-
         me = FragmentReplacement.<User>getObjectFromBundle(getArguments(),"me");
-
         if(me.getGroups().isEmpty()){
             new NoGroupAlert().show(getFragmentManager(),"NoGroupAlert");
             getGroupsListFragment();
@@ -90,19 +83,12 @@ public class StudentPanel extends Fragment {
             selectedGroup= FragmentReplacement.<Integer>getObjectFromBundle(getArguments(),"selectedGroup");
             Toast.makeText(getContext(),me.getGroups().get(selectedGroup).getSpecialization(),Toast.LENGTH_SHORT).show();
             ((MainActivity)getContext()).setTitle(me.getGroups().get(selectedGroup).getSpecialization());
-
         }
-
-
-
-
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_student_panel, container, false);
     }
 
@@ -110,48 +96,6 @@ public class StudentPanel extends Fragment {
         Bundle bundle = new Bundle();
         bundle.putSerializable("me", me);
         FragmentReplacement.pushFragment(getActivity(),R.id.startup_frame_layout_id, new Groups(), bundle);
-
-//        RequestQueue queue = Volley.newRequestQueue(getContext());
-//
-//// Request a string response from the provided URL.
-//        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, GlobalVariables.getApiUrl()+"/jpa/student-groups", null, new Response.Listener<JSONArray>() {
-//            @Override
-//            public void onResponse(JSONArray response) {
-//                Bundle bundle = new Bundle();
-//                Gson gson = new Gson();
-//                List<UserGroups> list = new ArrayList<UserGroups>();
-//                for (int i = 0; i < response.length(); i++) {
-//                    try {
-//                        UserGroups group = gson.fromJson(response.getJSONObject(i).toString(),UserGroups.class);
-//                        list.add(group);
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//
-//                bundle.putSerializable("groupsList", (Serializable) list);
-//                bundle.putSerializable("me", me);
-////                Toast.makeText(getContext(),"ok",Toast.LENGTH_SHORT).show();
-//                FragmentReplacement.pushFragment(getActivity(),R.id.startup_frame_layout_id, new Groups(), bundle);
-//
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                Toast.makeText(getContext(),"error",Toast.LENGTH_SHORT).show();
-//
-//            }
-//        }){
-//            @Override
-//            public Map<String, String> getHeaders() throws AuthFailureError {
-//                Map headers = new HashMap();
-//                headers.put("Content-Type", "application/json");
-//                return headers;
-//            }
-//        };
-//        queue.add(request);
-
-
     }
 
     public void getEvents(){
@@ -160,11 +104,4 @@ public class StudentPanel extends Fragment {
         bundle.putInt("selectedGroup",selectedGroup);
         FragmentReplacement.pushFragment(getActivity(),R.id.startup_frame_layout_id,new EventsPanel(),bundle);
     }
-
-
-
-
-
-
-
 }

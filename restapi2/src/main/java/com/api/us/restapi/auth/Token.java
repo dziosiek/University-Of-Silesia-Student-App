@@ -1,8 +1,8 @@
 package com.api.us.restapi.auth;
 
 public class Token {
-    String key = "token";
 
+    String key = "token";
 
     public String getKey() {
         return key;

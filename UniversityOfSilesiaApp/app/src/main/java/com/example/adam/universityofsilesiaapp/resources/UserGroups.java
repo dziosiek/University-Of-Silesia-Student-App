@@ -1,6 +1,7 @@
 package com.example.adam.universityofsilesiaapp.resources;
 
 public class UserGroups {
+
     String specialization;
     String year;
     Integer id;

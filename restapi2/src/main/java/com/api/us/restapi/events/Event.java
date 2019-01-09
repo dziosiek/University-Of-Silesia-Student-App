@@ -2,34 +2,31 @@ package com.api.us.restapi.events;
 
 import com.api.us.restapi.student_group.StudentGroup;
 import com.api.us.restapi.user.User;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
 public class Event {
+
     @Id
     @GeneratedValue
     Integer id;
+
     @NotNull
     Date date;
+
     @NotNull
     String title,description;
 
-    //    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler","events","userList"})
     StudentGroup group;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler","events","groupList"})
     User user;
-
-
 
     public Event() {
     }

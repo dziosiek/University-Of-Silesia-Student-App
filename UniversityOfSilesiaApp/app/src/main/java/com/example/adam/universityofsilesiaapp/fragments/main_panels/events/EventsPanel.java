@@ -1,7 +1,5 @@
 package com.example.adam.universityofsilesiaapp.fragments.main_panels.events;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -23,13 +21,11 @@ public class EventsPanel extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_events_panel, container, false);
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,16 +36,13 @@ public class EventsPanel extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()){
             case R.id.settings:
                 Toast.makeText(getContext(),"Settings",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.add_event:
                 Toast.makeText(getContext(),"Events",Toast.LENGTH_SHORT).show();
-
         }
-
         return super.onOptionsItemSelected(item);
     }
 

@@ -3,9 +3,6 @@ package com.api.us.restapi.student_group;
 import com.api.us.restapi.events.Event;
 import com.api.us.restapi.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -17,8 +14,10 @@ public class StudentGroup {
     @Id
     @GeneratedValue
     Integer id;
+
     @NotNull
     String specialization;
+
     @NotNull
     int year;
 
@@ -35,7 +34,8 @@ public class StudentGroup {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler","group"})
     List<Event> events = new ArrayList<>();
 
-
+    public StudentGroup() {
+    }
 
     public List<User> getUserList() {
         return userList;
@@ -43,9 +43,6 @@ public class StudentGroup {
 
     public void setUserList(List<User> userList) {
         this.userList = userList;
-    }
-
-    public StudentGroup() {
     }
 
     public Integer getId() {

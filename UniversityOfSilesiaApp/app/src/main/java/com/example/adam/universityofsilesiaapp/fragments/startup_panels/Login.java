@@ -46,8 +46,6 @@ public class Login extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-
         tvLogin = (TextView) getView().findViewById(R.id.fragment_login_login_textview_id);
         tvPassword = (TextView) getView().findViewById(R.id.fragment_login_password_textview_id);
         btRegister = (TextView) getView().findViewById(R.id.fragment_login_register_textview_asbutton_id);
@@ -64,35 +62,15 @@ public class Login extends Fragment {
                 loginM();
             }
         });
-
     }
-
-    //Hiding Options
-//    @Override
-//    public void onCreate(@Nullable Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setHasOptionsMenu(true);
-//    }
-//
-//    @Override
-//    public void onPrepareOptionsMenu(Menu main_options_menu) {
-//        main_options_menu.findItem(R.id.add_specialization).setVisible(false);
-//        super.onPrepareOptionsMenu(main_options_menu);
-//    }
-    //Hiding Options
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-
         return inflater.inflate(R.layout.fragment_login, container, false);
     }
 
-
     private void loginM() {
-
         RequestQueue queue = Volley.newRequestQueue(getContext());
         JSONObject jsonObject = new JSONObject();
         try {
@@ -101,44 +79,29 @@ public class Login extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.POST, GlobalVariables.getApiUrl()+"/jpa/login", jsonObject, new Response.Listener<JSONObject>() {
-
+                (Request.Method.POST, GlobalVariables.getApiUrl()+"/jpa/login",
+                        jsonObject, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-
                         Gson gson = new Gson();
                         try {
                             User user= gson.fromJson(response.getString("user-resource"),User.class);
                            UserGroups[] array = gson.fromJson(response.getString("groups-resource"),UserGroups[].class);
                             List<UserGroups> userGroups = new ArrayList<>(Arrays.asList(array));
                             user.setGroups(userGroups);
-
-
                             Bundle bundle = new Bundle();
                             bundle.putSerializable("me",user);
                             bundle.putInt("selectedGroup",0);
-
                             FragmentReplacement.pushFragment(getActivity(),
                                     R.id.startup_frame_layout_id, new StudentPanel(), bundle);
-
-//                            Toast.makeText(getContext(),user.getGroups().get(0).getSpecialization(),Toast.LENGTH_SHORT).show();
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
-
-
-
-
                     }
                 }, new Response.ErrorListener() {
-
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
                         NetworkResponse networkResponse = error.networkResponse;
                         if (networkResponse != null && networkResponse.statusCode == 404) {
                             Toast.makeText(getContext(),"Incorrect user or password",Toast.LENGTH_SHORT).show();
@@ -146,12 +109,8 @@ public class Login extends Fragment {
                         else if(networkResponse != null && networkResponse.statusCode == 400) {
                             Toast.makeText(getContext(),"BadRequest",Toast.LENGTH_SHORT).show();
                         }
-
                     }
-
-
                 }){
-//
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
@@ -159,10 +118,7 @@ public class Login extends Fragment {
                 return params;
             }
         };
-//
 
-
-// Add the request to the RequestQueue.
         queue.add(jsonObjectRequest);
 
     }

@@ -63,12 +63,9 @@ public class AddingGroupAlert extends AppCompatDialogFragment {
         return groupAdded;
     }
 
-
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
-
         builder.setTitle("Joining to group").setMessage("Would you like to join to the group:\n"
                 +getSpecialization()+", year "+getYear())
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -76,7 +73,6 @@ public class AddingGroupAlert extends AppCompatDialogFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         groupAdded = true;
                         addUserToGroup();
-
                     }
                 }).setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
@@ -91,8 +87,6 @@ public class AddingGroupAlert extends AppCompatDialogFragment {
         RequestQueue queue = Volley.newRequestQueue(context);
         String url = "/jpa/users/" + userId + "/groups";
         Toast.makeText(context, GlobalVariables.getApiUrl() + url, Toast.LENGTH_SHORT).show();
-
-
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.POST,
                         GlobalVariables.getApiUrl() + url + "?group_id=" + groupId,
@@ -101,38 +95,25 @@ public class AddingGroupAlert extends AppCompatDialogFragment {
                     @Override
                     public void onResponse(JSONObject response) {
                         Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show();
-
-
-
                     }
                 }, new Response.ErrorListener() {
-
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
                         NetworkResponse networkResponse = error.networkResponse;
                         if (networkResponse != null && networkResponse.statusCode == 409) {
                             Toast.makeText(context, "You are currently in this group", Toast.LENGTH_SHORT).show();
                         } else if (networkResponse != null && networkResponse.statusCode == 400) {
                             Toast.makeText(context, "400", Toast.LENGTH_SHORT).show();
                         }
-
                     }
-
-
                 }) {
-
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<String, String>();
                 headers.put("Content-Type", "application/json");
                 return headers;
             }
-
-
         };
-
         queue.add(jsonObjectRequest);
     }
-
 }

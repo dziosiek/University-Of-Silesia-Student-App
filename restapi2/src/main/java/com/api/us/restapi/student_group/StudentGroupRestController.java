@@ -10,12 +10,9 @@ import org.springframework.hateoas.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -51,71 +48,59 @@ public class StudentGroupRestController {
     @GetMapping("jpa/student-groups/{id}/users")
     public List<User> getUsersFromGroup(@PathVariable Integer id){
        Optional<StudentGroup> byId = studentGroupRepository.findById(id);
-        if(!byId.isPresent()){
+        if(!byId.isPresent())
             throw new NotFoundException("id group:"+Integer.toString(id) +" not found");
-        }
         return byId.get().getUserList();
     }
+
     @GetMapping("jpa/student-groups/{id}/events")
     public List<Event> getEventsByGroupId(@PathVariable Integer id){
         Optional<StudentGroup> byId= studentGroupRepository.findById(id);
         if(!byId.isPresent()){
             throw new NotFoundException("id:"+id+" not found");
         }
-
         return byId.get().getEvents();
     }
+
     @PostMapping("jpa/student-groups/{groupId}/events")
     public ResponseEntity<Object> addEvent(@PathVariable Integer groupId,
-                                           @RequestBody Event event, @RequestParam("user_id") Integer userId){
+                                           @RequestBody Event event,
+                                           @RequestParam("user_id") Integer userId){
         Optional<StudentGroup> studentGroupById= studentGroupRepository.findById(groupId);
         Optional<User> userById = userRepository.findById(userId);
-        if(!studentGroupById.isPresent()){
+        if(!studentGroupById.isPresent())
             throw new NotFoundException("id:"+groupId+" not found");
-        }
-        if(!userById.isPresent()){
+        if(!userById.isPresent())
             throw new NotFoundException("id:"+userById+" not found");
-        }
-
         event.setGroup(studentGroupById.get());
         event.setUser(userById.get());
         event.setDate(new Date());
         Event eventSaved = eventRepository.save(event);
-
         Resource<Event> resource = new Resource<>(eventSaved);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(eventSaved.getId()).toUri();
         return ResponseEntity.created(location).body(eventSaved);
-
-
     }
 
     @GetMapping("jpa/student-groups/{groupId}/events/{eventId}")
     public Event getEvent(@PathVariable Integer groupId, @PathVariable Integer eventId) {
         Optional<StudentGroup> studentGroupById = studentGroupRepository.findById(groupId);
         Optional<Event> eventById = eventRepository.findById(eventId);
-        if (!studentGroupById.isPresent()) {
+        if (!studentGroupById.isPresent())
             throw new NotFoundException("group id:" + groupId + " not found");
-        }
-        if (!eventById.isPresent()) {
+        if (!eventById.isPresent())
             throw new NotFoundException("event id:" + eventId + " not found");
-        }
-
-
         return eventById.get();
     }
+
     @DeleteMapping("jpa/student-groups/{groupId}/events/{eventId}")
     public ResponseEntity<Object> deleteEvent(@PathVariable Integer groupId, @PathVariable Integer eventId){
         Optional<Event> eventById = eventRepository.findById(eventId);
         Optional<StudentGroup> groupById= studentGroupRepository.findById(groupId);
-        if(!eventById.isPresent()){
+        if(!eventById.isPresent())
             throw new NotFoundException("event id:"+eventId+" not found");
-        }
-        if(!groupById.isPresent()){
+        if(!groupById.isPresent())
             throw new NotFoundException("group id:"+groupId+" not found");
-        }
         eventRepository.delete(eventById.get());
-//        groupById.get().getEvents().remove(eventById.get());
-//        studentGroupRepository.save(groupById.get());
         return ResponseEntity.noContent().build();
     }
 }

@@ -52,10 +52,8 @@ public class Groups extends Fragment {
     private RecyclerView recyclerView;
     RecyclerAdapter adapter;
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()){
             case R.id.add_to_group:
                 Toast.makeText(getContext(),"Add to group",Toast.LENGTH_SHORT).show();
@@ -66,7 +64,6 @@ public class Groups extends Fragment {
                 Toast.makeText(getContext(),"Choose a group",Toast.LENGTH_SHORT).show();
                 break;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -76,11 +73,9 @@ public class Groups extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_groups, container, false);
     }
@@ -90,10 +85,6 @@ public class Groups extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         me = FragmentReplacement.<User>getObjectFromBundle(getArguments(),"me");
-//        groupsList = FragmentReplacement.<List<UserGroups>>getObjectFromBundle(getArguments(),"groupsList");
-
-
-
         recyclerView = (RecyclerView) getView().findViewById(R.id.my_recycler_view);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getContext());
@@ -102,9 +93,6 @@ public class Groups extends Fragment {
         recyclerView.setAdapter(adapter);
 
         Toast.makeText(getContext(),adapter.toString(),Toast.LENGTH_SHORT).show();
-
-
-
     }
 
     @Override
@@ -114,14 +102,10 @@ public class Groups extends Fragment {
             listOfAllGroups();
         else
             listOfMyGroups();
-
     }
 
     public void listOfMyGroups(){
-
         RequestQueue queue = Volley.newRequestQueue(getContext());
-
-
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET,
                 GlobalVariables.getApiUrl()+"/jpa/users/"+me.getId()+"/groups",
                 null, new Response.Listener<JSONArray>() {
@@ -138,17 +122,12 @@ public class Groups extends Fragment {
                         e.printStackTrace();
                     }
                 }
-
                 adapter.swapItems(list,RecyclerViewMyConstants.MY_GROUPS_MODE);
-
-
-
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(getContext(),"error",Toast.LENGTH_SHORT).show();
-
             }
         }){
             @Override
@@ -159,18 +138,10 @@ public class Groups extends Fragment {
             }
         };
         queue.add(request);
-
-
-
-
     }
 
-
     public void listOfAllGroups(){
-
             RequestQueue queue = Volley.newRequestQueue(getContext());
-
-// Request a string response from the provided URL.
             JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, GlobalVariables.getApiUrl()+"/jpa/student-groups", null, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
@@ -185,18 +156,12 @@ public class Groups extends Fragment {
                             e.printStackTrace();
                         }
                     }
-
                     adapter.swapItems(list,RecyclerViewMyConstants.ALL_GROUPS_MODE);
-
-
-
-
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Toast.makeText(getContext(),"error",Toast.LENGTH_SHORT).show();
-
                 }
             }){
                 @Override
@@ -207,13 +172,5 @@ public class Groups extends Fragment {
                 }
             };
             queue.add(request);
-
-
         }
-
-
-
-
-
-
 }

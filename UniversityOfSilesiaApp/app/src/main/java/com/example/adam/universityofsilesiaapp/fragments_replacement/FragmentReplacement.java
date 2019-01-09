@@ -12,23 +12,21 @@ import com.example.adam.universityofsilesiaapp.MainActivity;
 import com.example.adam.universityofsilesiaapp.R;
 
 public class FragmentReplacement {
+
     FragmentManager manager;
 
     public static void pushFragment(Activity activity, int id, Fragment fragment) {
         FragmentManager manager = ((FragmentActivity) activity).getSupportFragmentManager();
-
-
-
-//        FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.startup_frame_layout_id, fragment);
         transaction.commit();
     }
+
     public static void pushFragment(Activity activity, int id, Fragment fragment, Bundle bundle) {
         fragment.setArguments(bundle);
         pushFragment(activity, id, fragment);
-
     }
+
     public static <T>  T getObjectFromBundle(Bundle bundle, String key){
         T t = (T) bundle.getSerializable(key);
         return t;
