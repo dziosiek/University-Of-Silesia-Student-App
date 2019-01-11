@@ -10,10 +10,15 @@ import org.springframework.hateoas.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Optional;
 
@@ -69,12 +74,21 @@ public class StudentGroupRestController {
         Optional<StudentGroup> studentGroupById= studentGroupRepository.findById(groupId);
         Optional<User> userById = userRepository.findById(userId);
         if(!studentGroupById.isPresent())
-            throw new NotFoundException("id:"+groupId+" not found");
+            throw new NotFoundException("group id:"+groupId+" not found");
         if(!userById.isPresent())
-            throw new NotFoundException("id:"+userById+" not found");
+            throw new NotFoundException("user id:"+userById+" not found");
         event.setGroup(studentGroupById.get());
         event.setUser(userById.get());
-        event.setDate(new Date());
+
+//        try {
+//            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+//            Date date1 = sdf.parse("2019-10-01 6:30");
+//            event.setDate(date1);
+//
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+
         Event eventSaved = eventRepository.save(event);
         Resource<Event> resource = new Resource<>(eventSaved);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(eventSaved.getId()).toUri();

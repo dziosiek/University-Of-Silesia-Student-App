@@ -2,9 +2,16 @@ package com.api.us.restapi.events;
 
 import com.api.us.restapi.student_group.StudentGroup;
 import com.api.us.restapi.user.User;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.DateSerializer;
+import org.springframework.format.annotation.DateTimeFormat;
+
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 @Entity
@@ -14,6 +21,8 @@ public class Event {
     @GeneratedValue
     Integer id;
 
+    @JsonSerialize(using = DateSerializer.class)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     @NotNull
     Date date;
 

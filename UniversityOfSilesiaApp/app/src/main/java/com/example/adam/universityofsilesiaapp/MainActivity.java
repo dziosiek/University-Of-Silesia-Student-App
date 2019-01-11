@@ -9,6 +9,7 @@ import android.widget.Toast;
 import com.example.adam.universityofsilesiaapp.fragments.startup_panels.Login;
 import com.example.adam.universityofsilesiaapp.fragments_replacement.FragmentReplacement;
 import com.example.adam.universityofsilesiaapp.resources.User;
+import com.example.adam.universityofsilesiaapp.variables.GlobalVariables;
 
 
 public class MainActivity extends AppCompatActivity {

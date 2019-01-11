@@ -38,4 +38,13 @@ public class UserGroups {
     public void setYear(String year) {
         this.year = year;
     }
+
+    @Override
+    public String toString() {
+        return "UserGroups{" +
+                "specialization='" + specialization + '\'' +
+                ", year='" + year + '\'' +
+                ", id=" + id +
+                '}';
+    }
 }
