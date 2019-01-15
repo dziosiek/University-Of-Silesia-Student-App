@@ -1,6 +1,7 @@
 package com.api.us.restapi.student_group;
 
 import com.api.us.restapi.events.Event;
+import com.api.us.restapi.timetable.Timetable;
 import com.api.us.restapi.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
@@ -33,6 +34,10 @@ public class StudentGroup {
     @OneToMany(mappedBy = "group")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler","group"})
     List<Event> events = new ArrayList<>();
+
+    @OneToMany(mappedBy = "group")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler","group"})
+    List<Timetable> timetableList = new ArrayList<>();
 
     public StudentGroup() {
     }

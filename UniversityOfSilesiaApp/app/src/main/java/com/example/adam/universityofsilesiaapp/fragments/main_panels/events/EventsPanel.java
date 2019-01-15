@@ -119,7 +119,7 @@ public class EventsPanel extends Fragment {
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         Event event= gson.fromJson(response.getJSONObject(i).toString(),Event.class);
-//                        Toast.makeText(getContext(),event.toString(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(),response.getJSONObject(i).toString(),Toast.LENGTH_SHORT).show();
                         list.add(event);
                     } catch (JSONException e) {
                         e.printStackTrace();

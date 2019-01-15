@@ -69,8 +69,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull final RecyclerViewHolder recyclerViewHolder, int i) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:MM");
+
         recyclerViewHolder.title.setText(listData.get(i).getTitle());
-        recyclerViewHolder.date.setText(sdf.format(listData.get(i).getDate()));
+        recyclerViewHolder.date.setText(listData.get(i).getDate());
         recyclerViewHolder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position, boolean isLongClick) {

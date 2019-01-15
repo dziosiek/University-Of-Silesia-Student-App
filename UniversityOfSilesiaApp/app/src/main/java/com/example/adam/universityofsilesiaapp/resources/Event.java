@@ -1,11 +1,13 @@
 package com.example.adam.universityofsilesiaapp.resources;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Event {
 
     private Integer id;
-    private Date date;
+    private String date;
     private String title, description;
     User user;
     UserGroups group;
@@ -14,7 +16,7 @@ public class Event {
     public Event() {
     }
 
-    public Event(Integer id, Date date, String title, String description, User user, UserGroups group) {
+    public Event(Integer id, String date, String title, String description, User user, UserGroups group) {
         this.id = id;
         this.date = date;
         this.title = title;
@@ -22,7 +24,7 @@ public class Event {
         this.user = user;
         this.group = group;
     }
-    public Event(Date date, String title, String description) {
+    public Event(String date, String title, String description) {
         this.date = date;
         this.title = title;
         this.description = description;
@@ -37,12 +39,17 @@ public class Event {
         this.id = id;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
+    }
+
+    public Date getDateAsDateFormat() throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            return sdf.parse(getDate());
     }
 
     public String getTitle() {

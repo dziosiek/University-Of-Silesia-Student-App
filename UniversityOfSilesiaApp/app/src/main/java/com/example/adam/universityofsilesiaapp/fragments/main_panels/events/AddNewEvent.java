@@ -1,7 +1,5 @@
 package com.example.adam.universityofsilesiaapp.fragments.main_panels.events;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,26 +16,22 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.adam.universityofsilesiaapp.R;
-import com.example.adam.universityofsilesiaapp.fragments.main_panels.events.recycler_view_components.DateComparator;
 import com.example.adam.universityofsilesiaapp.fragments_replacement.FragmentReplacement;
 import com.example.adam.universityofsilesiaapp.resources.Event;
 import com.example.adam.universityofsilesiaapp.resources.User;
 import com.example.adam.universityofsilesiaapp.variables.GlobalVariables;
 import com.google.gson.Gson;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
@@ -45,7 +39,7 @@ public class AddNewEvent extends Fragment {
 
     User me;
     Integer selectedGroup=null;
-    TextView title, description, date, time;
+    TextView titleTV, descriptionTV, dateTV, timeTV;
     Button addBtn;
 
     public AddNewEvent() {
@@ -67,10 +61,10 @@ public class AddNewEvent extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        title = getView().findViewById(R.id.add_event_fragment_title);
-        description = getView().findViewById(R.id.add_event_fragment_description);
-        date = getView().findViewById(R.id.add_event_fragment_date);
-        time = getView().findViewById(R.id.add_event_fragment_time);
+        titleTV = getView().findViewById(R.id.add_event_fragment_title);
+        descriptionTV = getView().findViewById(R.id.add_event_fragment_description);
+        dateTV = getView().findViewById(R.id.add_event_fragment_date);
+        timeTV = getView().findViewById(R.id.add_event_fragment_time);
         addBtn = getView().findViewById(R.id.add_event_fragment_add_btn);
         me = FragmentReplacement.<User>getObjectFromBundle(getArguments(),"me");
         selectedGroup = FragmentReplacement.<Integer>getObjectFromBundle(getArguments(),"selectedGroup");
@@ -86,10 +80,13 @@ public class AddNewEvent extends Fragment {
         RequestQueue queue = Volley.newRequestQueue(getContext());
 
 
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Gson gson = new Gson();
         JSONObject jsonObject= null;
+        String date = dateTV.getText().toString() + " " + timeTV.getText().toString();
+
         try {
-            jsonObject = new JSONObject(gson.toJson(new Event(new Date(),"title","desc")));
+            jsonObject = new JSONObject(gson.toJson(new Event(date,"title","desc")));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -106,8 +103,14 @@ public class AddNewEvent extends Fragment {
                 Toast.makeText(getContext(),"Error",Toast.LENGTH_SHORT).show();
 
             }
-        });
-
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map headers = new HashMap();
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+        };
         queue.add(request);
     }
 }

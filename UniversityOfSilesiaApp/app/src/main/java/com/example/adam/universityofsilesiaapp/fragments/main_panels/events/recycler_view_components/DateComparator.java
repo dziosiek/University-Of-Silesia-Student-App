@@ -2,12 +2,18 @@ package com.example.adam.universityofsilesiaapp.fragments.main_panels.events.rec
 
 import com.example.adam.universityofsilesiaapp.resources.Event;
 
+import java.text.ParseException;
 import java.util.Comparator;
 
 public class DateComparator implements Comparator<Event> {
 
     @Override
     public int compare(Event o1, Event o2) {
-        return o1.getDate().compareTo(o2.getDate());
+        try {
+            return o1.getDateAsDateFormat().compareTo(o2.getDateAsDateFormat());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return 1;
     }
 }

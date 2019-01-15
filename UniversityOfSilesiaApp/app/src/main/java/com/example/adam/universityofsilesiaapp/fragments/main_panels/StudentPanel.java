@@ -24,6 +24,7 @@ import com.example.adam.universityofsilesiaapp.R;
 import com.example.adam.universityofsilesiaapp.fragments.main_panels.events.EventsPanel;
 import com.example.adam.universityofsilesiaapp.fragments.main_panels.groups.Groups;
 import com.example.adam.universityofsilesiaapp.fragments.main_panels.groups.alerts.NoGroupAlert;
+import com.example.adam.universityofsilesiaapp.fragments.main_panels.schedule.Schedule;
 import com.example.adam.universityofsilesiaapp.fragments_replacement.FragmentReplacement;
 import com.example.adam.universityofsilesiaapp.resources.User;
 import com.example.adam.universityofsilesiaapp.resources.UserGroups;
@@ -61,9 +62,14 @@ public class StudentPanel extends Fragment {
             case R.id.events:
                 Toast.makeText(getContext(),"Events",Toast.LENGTH_SHORT).show();
                 getEvents();
+            case R.id.schedule:
+                Toast.makeText(getContext(),"Schedule",Toast.LENGTH_SHORT).show();
+                getScheduleFragment();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
+
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -103,5 +109,11 @@ public class StudentPanel extends Fragment {
         bundle.putSerializable("me", me);
         bundle.putInt("selectedGroup",selectedGroup);
         FragmentReplacement.pushFragment(getActivity(),R.id.startup_frame_layout_id,new EventsPanel(),bundle);
+    }
+    private void getScheduleFragment() {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("me", me);
+        bundle.putInt("selectedGroup",selectedGroup);
+        FragmentReplacement.pushFragment(getActivity(), R.id.startup_frame_layout_id, new Schedule(), bundle);
     }
 }

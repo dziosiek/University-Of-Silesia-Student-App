@@ -11,8 +11,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
+
+
 
 @Entity
 public class Event {
@@ -25,6 +29,7 @@ public class Event {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     @NotNull
     Date date;
+
 
     @NotNull
     String title,description;
