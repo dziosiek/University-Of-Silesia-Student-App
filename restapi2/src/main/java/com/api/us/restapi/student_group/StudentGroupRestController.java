@@ -21,7 +21,7 @@ import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Optional;
@@ -168,7 +168,15 @@ public class StudentGroupRestController {
         return ResponseEntity.noContent().build();
     }
 
-    @Scheduled(fixedRate = 500)
+    @Scheduled(fixedRate = 3600000)
     public void deletePastEvents() {
+        Date date = new Date();
+        for (Event event:eventRepository.findAll()) {
+//            System.out.println("event = " + event.getDate());
+//            System.out.println("date = " + date);
+            if(event.getDate().before(date)){
+                eventRepository.delete(event);
+            }
+        }
     }
 }

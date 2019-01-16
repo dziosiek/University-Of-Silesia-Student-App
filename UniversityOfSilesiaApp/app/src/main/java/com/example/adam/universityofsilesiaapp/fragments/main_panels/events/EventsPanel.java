@@ -112,7 +112,6 @@ public class EventsPanel extends Fragment {
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, GlobalVariables.getApiUrl()+"/jpa/student-groups/"+me.getGroups().get(selectedGroup).getId()+"/events/", null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-
                 Bundle bundle = new Bundle();
                 Gson gson = new Gson();
                 List<Event> list = new ArrayList<Event>();
@@ -127,6 +126,7 @@ public class EventsPanel extends Fragment {
                 }
                 Collections.sort(list, new DateComparator());
                 adapter.swapItems(list);
+                getEventsList();
             }
         }, new Response.ErrorListener() {
             @Override

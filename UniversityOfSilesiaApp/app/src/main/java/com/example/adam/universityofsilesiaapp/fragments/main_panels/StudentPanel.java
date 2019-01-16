@@ -10,6 +10,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -45,6 +47,7 @@ public class StudentPanel extends Fragment {
 
     User me;
     Integer selectedGroup;
+    WebView webView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,6 +65,7 @@ public class StudentPanel extends Fragment {
             case R.id.events:
                 Toast.makeText(getContext(),"Events",Toast.LENGTH_SHORT).show();
                 getEvents();
+                break;
             case R.id.schedule:
                 Toast.makeText(getContext(),"Schedule",Toast.LENGTH_SHORT).show();
                 getScheduleFragment();
@@ -88,8 +92,20 @@ public class StudentPanel extends Fragment {
         else {
             selectedGroup= FragmentReplacement.<Integer>getObjectFromBundle(getArguments(),"selectedGroup");
             Toast.makeText(getContext(),me.getGroups().get(selectedGroup).getSpecialization(),Toast.LENGTH_SHORT).show();
-            ((MainActivity)getContext()).setTitle(me.getGroups().get(selectedGroup).getSpecialization());
+            ((MainActivity)getContext()).setTitle(me.getGroups().get(selectedGroup).getSpecialization() + ", year " +
+                    me.getGroups().get(selectedGroup).getYear());
         }
+
+        //WebView code block
+
+        webView = (WebView) getView().findViewById(R.id.us_website);
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setSupportZoom(true);
+        webSettings.setBuiltInZoomControls(true);
+        webView.loadUrl("http://english.us.edu.pl");
+
+        //End of code
     }
 
     @Override

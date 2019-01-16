@@ -11,11 +11,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.sql.Date;
+
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.format.DateTimeFormatter;
-
+import java.util.Date;
 
 
 @Entity
@@ -32,7 +32,9 @@ public class Event {
 
 
     @NotNull
-    String title,description;
+    String title;
+    @Column(length=1000)
+    String description;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler","events","userList"})

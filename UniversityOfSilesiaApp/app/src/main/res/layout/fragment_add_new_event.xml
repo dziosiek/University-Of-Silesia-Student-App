@@ -14,8 +14,9 @@
 
         <EditText
             android:id="@+id/add_event_fragment_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:layout_width="328dp"
+            android:layout_height="44dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
@@ -32,24 +33,33 @@
 
         <EditText
             android:id="@+id/add_event_fragment_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="328dp"
+            android:layout_height="44dp"
             android:layout_marginTop="8dp"
             android:ems="10"
             android:hint="Set Date"
             android:inputType="date"
+            android:scrollbars="vertical"
+            android:textSize="20dp"
             app:layout_constraintEnd_toEndOf="@+id/add_event_fragment_description"
             app:layout_constraintStart_toStartOf="@+id/add_event_fragment_description"
             app:layout_constraintTop_toBottomOf="@+id/add_event_fragment_description" />
 
         <EditText
             android:id="@+id/add_event_fragment_description"
-            android:layout_width="wrap_content"
-            android:layout_height="145dp"
+            android:layout_width="328dp"
+            android:layout_height="158dp"
             android:layout_marginTop="8dp"
             android:ems="10"
+            android:gravity="top|left"
             android:hint="Set Description"
-            android:inputType="textLongMessage"
+            android:inputType="textMultiLine"
+            android:lines="8"
+            android:maxLines="10"
+            android:minLines="4"
+            android:scrollbars="vertical"
+            android:textSize="20dp"
+
             app:layout_constraintEnd_toEndOf="@+id/add_event_fragment_title"
             app:layout_constraintStart_toStartOf="@+id/add_event_fragment_title"
             app:layout_constraintTop_toBottomOf="@+id/add_event_fragment_title" />
@@ -66,12 +76,12 @@
 
         <EditText
             android:id="@+id/add_event_fragment_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="328dp"
+            android:layout_height="44dp"
             android:layout_marginTop="8dp"
             android:ems="10"
             android:hint="Set Time"
-            android:inputType="time"
+            android:textSize="20dp"
             app:layout_constraintEnd_toEndOf="@+id/add_event_fragment_date"
             app:layout_constraintStart_toStartOf="@+id/add_event_fragment_date"
             app:layout_constraintTop_toBottomOf="@+id/add_event_fragment_date" />

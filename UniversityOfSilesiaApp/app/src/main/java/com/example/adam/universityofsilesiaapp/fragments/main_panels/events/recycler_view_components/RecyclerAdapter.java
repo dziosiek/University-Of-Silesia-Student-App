@@ -2,6 +2,9 @@ package com.example.adam.universityofsilesiaapp.fragments.main_panels.events.rec
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.adam.universityofsilesiaapp.R;
+import com.example.adam.universityofsilesiaapp.fragments.main_panels.events.EventDetailsDialog;
 import com.example.adam.universityofsilesiaapp.fragments.main_panels.groups.recycler_view_components.ItemClickListener;
 import com.example.adam.universityofsilesiaapp.resources.Event;
 import com.example.adam.universityofsilesiaapp.resources.User;
@@ -68,15 +72,17 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull final RecyclerViewHolder recyclerViewHolder, int i) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:MM");
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:MM");
 
         recyclerViewHolder.title.setText(listData.get(i).getTitle());
         recyclerViewHolder.date.setText(listData.get(i).getDate());
         recyclerViewHolder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position, boolean isLongClick) {
-
-
+                Event event = listData.get(position);
+                EventDetailsDialog dialog = new EventDetailsDialog();
+                dialog.setParams(event.getTitle(),event.getDescription(),event.getDate(),event.getUser().getFullName());
+                dialog.show(((FragmentActivity) context).getSupportFragmentManager(),"EventDetailsDialog");
             }
         });
     }
