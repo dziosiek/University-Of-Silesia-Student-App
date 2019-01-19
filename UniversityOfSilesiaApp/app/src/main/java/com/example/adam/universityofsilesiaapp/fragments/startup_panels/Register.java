@@ -68,7 +68,7 @@ public class Register extends Fragment {
             jsonObject.put("firstname",firstname.getText().toString());
             jsonObject.put("lastname",lastname.getText().toString());
             jsonObject.put("email",email.getText().toString());
-            Toast.makeText(getContext(),email.getText().toString(),Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getContext(),email.getText().toString(),Toast.LENGTH_SHORT).show();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -79,7 +79,7 @@ public class Register extends Fragment {
                         jsonObject, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Toast.makeText(getContext(),response.toString(),Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getContext(),response.toString(),Toast.LENGTH_SHORT).show();
                         FragmentReplacement.pushFragment(getActivity(), R.id.startup_frame_layout_id,new Login());
                     }
                 }, new Response.ErrorListener() {

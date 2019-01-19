@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        GlobalVariables.setApiUrl("http://192.168.1.104:8080");
+        GlobalVariables.setApiUrl("http://192.168.8.236:8080");
         FragmentReplacement.pushFragment(MainActivity.this,R.id.startup_frame_layout_id,new Login());
 
 

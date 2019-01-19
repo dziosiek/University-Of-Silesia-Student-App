@@ -86,7 +86,7 @@ public class AddingGroupAlert extends AppCompatDialogFragment {
     public void addUserToGroup() {
         RequestQueue queue = Volley.newRequestQueue(context);
         String url = "/jpa/users/" + userId + "/groups";
-        Toast.makeText(context, GlobalVariables.getApiUrl() + url, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(context, GlobalVariables.getApiUrl() + url, Toast.LENGTH_SHORT).show();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.POST,
                         GlobalVariables.getApiUrl() + url + "?group_id=" + groupId,
@@ -94,7 +94,7 @@ public class AddingGroupAlert extends AppCompatDialogFragment {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show();
                     }
                 }, new Response.ErrorListener() {
                     @Override

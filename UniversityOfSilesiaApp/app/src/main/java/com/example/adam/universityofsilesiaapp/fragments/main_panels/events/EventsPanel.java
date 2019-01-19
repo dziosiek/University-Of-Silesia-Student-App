@@ -126,7 +126,7 @@ public class EventsPanel extends Fragment {
                 }
                 Collections.sort(list, new DateComparator());
                 adapter.swapItems(list);
-                getEventsList();
+//                getEventsList();
             }
         }, new Response.ErrorListener() {
             @Override

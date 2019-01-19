@@ -92,7 +92,7 @@ public class Groups extends Fragment {
         adapter = new RecyclerAdapter(new ArrayList<UserGroups>(),getContext(),me);
         recyclerView.setAdapter(adapter);
 
-        Toast.makeText(getContext(),adapter.toString(),Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(),adapter.toString(),Toast.LENGTH_SHORT).show();
     }
 
     @Override

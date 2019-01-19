@@ -26,6 +26,16 @@ public class EventDetailsDialog extends DialogFragment {
         this.addedBy = addedBy;
     }
 
+    @Override
+    public String toString() {
+        return "EventDetailsDialog{" +
+                "title='" + title + '\'' +
+                ", desc='" + desc + '\'' +
+                ", date='" + date + '\'' +
+                ", addedBy='" + addedBy + '\'' +
+                '}';
+    }
+
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -41,7 +51,7 @@ public class EventDetailsDialog extends DialogFragment {
         desc.setMovementMethod(new ScrollingMovementMethod());
         date.setText(this.date);
         addedBy.setText(this.addedBy);
-        builder.setView(content).setTitle("Details")
+        builder.setView(content)
                 .setPositiveButton("Close", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {

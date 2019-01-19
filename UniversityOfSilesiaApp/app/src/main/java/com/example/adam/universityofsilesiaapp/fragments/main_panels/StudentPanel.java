@@ -91,7 +91,7 @@ public class StudentPanel extends Fragment {
         }
         else {
             selectedGroup= FragmentReplacement.<Integer>getObjectFromBundle(getArguments(),"selectedGroup");
-            Toast.makeText(getContext(),me.getGroups().get(selectedGroup).getSpecialization(),Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getContext(),me.getGroups().get(selectedGroup).getSpecialization(),Toast.LENGTH_SHORT).show();
             ((MainActivity)getContext()).setTitle(me.getGroups().get(selectedGroup).getSpecialization() + ", year " +
                     me.getGroups().get(selectedGroup).getYear());
         }
@@ -103,7 +103,7 @@ public class StudentPanel extends Fragment {
         webSettings.setJavaScriptEnabled(true);
         webSettings.setSupportZoom(true);
         webSettings.setBuiltInZoomControls(true);
-        webView.loadUrl("http://english.us.edu.pl");
+        webView.loadUrl("http://www.magazynsuplement.us.edu.pl/");
 
         //End of code
     }

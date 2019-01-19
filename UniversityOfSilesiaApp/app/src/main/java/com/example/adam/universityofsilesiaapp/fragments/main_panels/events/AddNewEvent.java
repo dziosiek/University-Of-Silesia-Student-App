@@ -60,7 +60,7 @@ public class AddNewEvent extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Toast.makeText(getContext(),"destroyed",Toast.LENGTH_LONG).show();
+//        Toast.makeText(getContext(),"destroyed",Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -87,7 +87,7 @@ public class AddNewEvent extends Fragment {
         addBtn = getView().findViewById(R.id.add_event_fragment_add_btn);
         me = FragmentReplacement.<User>getObjectFromBundle(getArguments(),"me");
         selectedGroup = FragmentReplacement.<Integer>getObjectFromBundle(getArguments(),"selectedGroup");
-        Toast.makeText(getContext(),me.toString()+selectedGroup,Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(),me.toString()+selectedGroup,Toast.LENGTH_SHORT).show();
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

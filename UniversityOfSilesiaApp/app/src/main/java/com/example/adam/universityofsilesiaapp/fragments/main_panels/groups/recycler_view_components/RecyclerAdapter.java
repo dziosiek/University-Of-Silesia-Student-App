@@ -103,7 +103,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerViewHolder>{
                     me.setGroups(listData);
                     bundle.putSerializable("me",me);
                     bundle.putInt("selectedGroup",position);
-                    Toast.makeText(context,Integer.toString(position),Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(context,Integer.toString(position),Toast.LENGTH_SHORT).show();
                     FragmentReplacement.pushFragment((Activity) context,
                             R.id.startup_frame_layout_id, new StudentPanel(),bundle);
                 }

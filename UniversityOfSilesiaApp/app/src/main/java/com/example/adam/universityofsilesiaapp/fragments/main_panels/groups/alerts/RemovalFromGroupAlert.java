@@ -70,17 +70,17 @@ public class RemovalFromGroupAlert extends AppCompatDialogFragment {
         return builder.create();
     }
     public void deleteGroup() {
-        Toast.makeText(getContext(),adapter.toString(),Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(),adapter.toString(),Toast.LENGTH_SHORT).show();
         RequestQueue queue = Volley.newRequestQueue(context);
         String url = "/jpa/users/" + me.getId()+ "/groups/"+this.userGroups.get(this.position).getId();
-        Toast.makeText(context, GlobalVariables.getApiUrl() + url, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(context, GlobalVariables.getApiUrl() + url, Toast.LENGTH_SHORT).show();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.DELETE,
                         GlobalVariables.getApiUrl() + url,
                         null, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(context, response.toString(), Toast.LENGTH_SHORT).show();
                     }
                 }, new Response.ErrorListener() {
                     @Override
