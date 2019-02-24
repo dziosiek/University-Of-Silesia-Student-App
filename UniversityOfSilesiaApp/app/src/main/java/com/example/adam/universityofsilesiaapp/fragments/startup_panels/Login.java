@@ -3,10 +3,12 @@ package com.example.adam.universityofsilesiaapp.fragments.startup_panels;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,7 +23,6 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.adam.universityofsilesiaapp.R;
 import com.example.adam.universityofsilesiaapp.fragments.main_panels.StudentPanel;
-
 import com.example.adam.universityofsilesiaapp.fragments_replacement.FragmentReplacement;
 import com.example.adam.universityofsilesiaapp.resources.User;
 import com.example.adam.universityofsilesiaapp.resources.UserGroups;
@@ -40,8 +41,9 @@ import java.util.Map;
 
 public class Login extends Fragment {
 
-    TextView tvLogin,tvPassword, btRegister;
+    TextView tvLogin, tvPassword, btRegister;
     Button btLogin;
+    ConstraintLayout floatingLoginWidget;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -50,10 +52,15 @@ public class Login extends Fragment {
         tvPassword = (TextView) getView().findViewById(R.id.fragment_login_password_textview_id);
         btRegister = (TextView) getView().findViewById(R.id.fragment_login_register_textview_asbutton_id);
         btLogin = (Button) getView().findViewById(R.id.fragment_login_login_btn_id);
+        floatingLoginWidget = getView().findViewById(R.id.loginWidget);
+
+
+
+
         btRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentReplacement.pushFragment(getActivity(),R.id.startup_frame_layout_id,new Register());
+                FragmentReplacement.pushFragment(getActivity(), R.id.startup_frame_layout_id, new Register());
             }
         });
         btLogin.setOnClickListener(new View.OnClickListener() {
@@ -74,25 +81,25 @@ public class Login extends Fragment {
         RequestQueue queue = Volley.newRequestQueue(getContext());
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("login",tvLogin.getText().toString());
-            jsonObject.put("password",tvPassword.getText().toString());
+            jsonObject.put("login", tvLogin.getText().toString());
+            jsonObject.put("password", tvPassword.getText().toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.POST, GlobalVariables.getApiUrl()+"/jpa/login",
+                (Request.Method.POST, GlobalVariables.getApiUrl() + "/jpa/login",
                         jsonObject, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         Gson gson = new Gson();
                         try {
-                            User user= gson.fromJson(response.getString("user-resource"),User.class);
-                           UserGroups[] array = gson.fromJson(response.getString("groups-resource"),UserGroups[].class);
+                            User user = gson.fromJson(response.getString("user-resource"), User.class);
+                            UserGroups[] array = gson.fromJson(response.getString("groups-resource"), UserGroups[].class);
                             List<UserGroups> userGroups = new ArrayList<>(Arrays.asList(array));
                             user.setGroups(userGroups);
                             Bundle bundle = new Bundle();
-                            bundle.putSerializable("me",user);
-                            bundle.putInt("selectedGroup",0);
+                            bundle.putSerializable("me", user);
+                            bundle.putInt("selectedGroup", 0);
                             FragmentReplacement.pushFragment(getActivity(),
                                     R.id.startup_frame_layout_id, new StudentPanel(), bundle);
                         } catch (JSONException e) {
@@ -104,13 +111,12 @@ public class Login extends Fragment {
                     public void onErrorResponse(VolleyError error) {
                         NetworkResponse networkResponse = error.networkResponse;
                         if (networkResponse != null && networkResponse.statusCode == 404) {
-                            Toast.makeText(getContext(),"Incorrect user or password",Toast.LENGTH_SHORT).show();
-                        }
-                        else if(networkResponse != null && networkResponse.statusCode == 400) {
-                            Toast.makeText(getContext(),"BadRequest",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "Incorrect user or password", Toast.LENGTH_SHORT).show();
+                        } else if (networkResponse != null && networkResponse.statusCode == 400) {
+//                            Toast.makeText(getContext(),"BadRequest",Toast.LENGTH_SHORT).show();
                         }
                     }
-                }){
+                }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();

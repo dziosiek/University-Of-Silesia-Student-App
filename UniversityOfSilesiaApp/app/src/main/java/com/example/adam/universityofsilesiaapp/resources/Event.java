@@ -6,11 +6,11 @@ import java.util.Date;
 
 public class Event {
 
+    User user;
+    UserGroups group;
     private Integer id;
     private String date;
     private String title, description;
-    User user;
-    UserGroups group;
 
 
     public Event() {
@@ -24,6 +24,7 @@ public class Event {
         this.user = user;
         this.group = group;
     }
+
     public Event(String date, String title, String description) {
         this.date = date;
         this.title = title;
@@ -49,7 +50,7 @@ public class Event {
 
     public Date getDateAsDateFormat() throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-            return sdf.parse(getDate());
+        return sdf.parse(getDate());
     }
 
     public String getTitle() {

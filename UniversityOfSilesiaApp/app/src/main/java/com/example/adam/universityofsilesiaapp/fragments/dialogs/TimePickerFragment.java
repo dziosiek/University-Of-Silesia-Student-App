@@ -8,8 +8,6 @@ import android.text.format.DateFormat;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import com.example.adam.universityofsilesiaapp.R;
-
 import java.util.Calendar;
 
 public class TimePickerFragment extends DialogFragment
@@ -18,7 +16,7 @@ public class TimePickerFragment extends DialogFragment
     int fieldId;
 
     //TextViewField
-    public void setFieldId(int fieldId){
+    public void setFieldId(int fieldId) {
         this.fieldId = fieldId;
     }
 
@@ -37,7 +35,7 @@ public class TimePickerFragment extends DialogFragment
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         TextView textView = (TextView) getActivity().findViewById(fieldId);
 
-        textView.setText((hourOfDay<10? "0"+hourOfDay:hourOfDay)+":"+(minute<10? "0"+minute:minute));
+        textView.setText((hourOfDay < 10 ? "0" + hourOfDay : hourOfDay) + ":" + (minute < 10 ? "0" + minute : minute));
     }
 
 }

@@ -15,9 +15,13 @@
         android:layout_height="match_parent">
 
         <android.support.constraint.ConstraintLayout
+            android:id="@+id/loginWidget"
+            style="@style/WhiteWidget"
             android:layout_width="268dp"
             android:layout_height="379dp"
-            android:background="#b2ffffff"
+            android:animateLayoutChanges="true"
+
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -36,12 +40,12 @@
 
             <EditText
                 android:id="@+id/fragment_login_login_textview_id"
+                style="@style/textField"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
-
                 android:ems="10"
                 android:hint="Enter your login"
                 android:inputType="textPersonName"
@@ -52,6 +56,7 @@
 
             <EditText
                 android:id="@+id/fragment_login_password_textview_id"
+                style="@style/textField"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -64,6 +69,7 @@
 
             <TextView
                 android:id="@+id/fragment_login_register_textview_asbutton_id"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"

@@ -7,15 +7,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
-import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -36,10 +33,8 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -47,7 +42,7 @@ import java.util.Map;
 public class AddNewEvent extends Fragment {
 
     User me;
-    Integer selectedGroup=null;
+    Integer selectedGroup = null;
     EditText titleTV, descriptionTV, dateTV, timeTV;
     Button addBtn;
     Calendar myCalendar;
@@ -55,6 +50,16 @@ public class AddNewEvent extends Fragment {
 
     public AddNewEvent() {
         // Required empty public constructor
+    }
+
+    public static void disableSoftInputFromAppearing(EditText editText) {
+        if (Build.VERSION.SDK_INT >= 11) {
+            editText.setRawInputType(InputType.TYPE_CLASS_TEXT);
+            editText.setTextIsSelectable(true);
+        } else {
+            editText.setRawInputType(InputType.TYPE_NULL);
+            editText.setFocusable(true);
+        }
     }
 
     @Override
@@ -74,27 +79,25 @@ public class AddNewEvent extends Fragment {
         return inflater.inflate(R.layout.fragment_add_new_event, container, false);
     }
 
-    public boolean textFieldsAreNotEmpty(){
+    public boolean textFieldsAreNotEmpty() {
         boolean isTrue = true;
-        if(titleTV.getText().length()<5){
+        if (titleTV.getText().length() < 5) {
             titleTV.setError("Title must contain 5 characters minimum");
             isTrue = false;
         }
-        if(descriptionTV.getText().length()<5){
+        if (descriptionTV.getText().length() < 5) {
             descriptionTV.setError("Description must contain 5 characters minimum");
             isTrue = false;
         }
         int time = timeTV.getText().length();
-        if(dateTV.getText().length()<=0){
+        if (dateTV.getText().length() <= 0) {
             dateTV.setError("Date cannot be empty");
 
-        }
-        else  dateTV.setError(null);
-        if(timeTV.getText().length()<=0){
+        } else dateTV.setError(null);
+        if (timeTV.getText().length() <= 0) {
             timeTV.setError("Time cannot be empty");
             isTrue = false;
-        }
-        else  timeTV.setError(null);
+        } else timeTV.setError(null);
 
 
         return isTrue;
@@ -110,13 +113,13 @@ public class AddNewEvent extends Fragment {
         disableSoftInputFromAppearing(dateTV);
         disableSoftInputFromAppearing(timeTV);
         addBtn = getView().findViewById(R.id.add_event_fragment_add_btn);
-        me = FragmentReplacement.<User>getObjectFromBundle(getArguments(),"me");
-        selectedGroup = FragmentReplacement.<Integer>getObjectFromBundle(getArguments(),"selectedGroup");
+        me = FragmentReplacement.<User>getObjectFromBundle(getArguments(), "me");
+        selectedGroup = FragmentReplacement.<Integer>getObjectFromBundle(getArguments(), "selectedGroup");
 //        Toast.makeText(getContext(),me.toString()+selectedGroup,Toast.LENGTH_SHORT).show();
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(textFieldsAreNotEmpty()){
+                if (textFieldsAreNotEmpty()) {
                     addEvent();
                 }
 
@@ -140,10 +143,10 @@ public class AddNewEvent extends Fragment {
         timeTV.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
+                if (hasFocus) {
                     TimePickerFragment timePickerFragment = new TimePickerFragment();
                     timePickerFragment.setFieldId(R.id.add_event_fragment_time);
-                    timePickerFragment.show(getFragmentManager(),"timePickerFragment");
+                    timePickerFragment.show(getFragmentManager(), "timePickerFragment");
                     v.clearFocus();
                 }
             }
@@ -153,7 +156,7 @@ public class AddNewEvent extends Fragment {
         dateTV.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus){
+                if (hasFocus) {
                     new DatePickerDialog(getContext(), date, myCalendar
                             .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                             myCalendar.get(Calendar.DAY_OF_MONTH)).show();
@@ -163,20 +166,21 @@ public class AddNewEvent extends Fragment {
         });
 
     }
-    public void updateDate(){
+
+    public void updateDate() {
         String myFormat = "yyyy-MM-dd";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat);
 
         dateTV.setText(sdf.format(myCalendar.getTime()));
     }
-    public void addEvent()  {
-        RequestQueue queue = Volley.newRequestQueue(getContext());
 
+    public void addEvent() {
+        RequestQueue queue = Volley.newRequestQueue(getContext());
 
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         Gson gson = new Gson();
-        JSONObject jsonObject= null;
+        JSONObject jsonObject = null;
         String date = dateTV.getText().toString() + " " + timeTV.getText().toString();
 
         try {
@@ -188,14 +192,14 @@ public class AddNewEvent extends Fragment {
                 GlobalVariables.getApiUrl() + "/jpa/student-groups/" + me.getGroups().get(selectedGroup).getId() + "/events?user_id=" + me.getId(), jsonObject, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Toast.makeText(getContext(),"Event added",Toast.LENGTH_SHORT).show();
-                FragmentReplacement.pushFragment(getActivity(),R.id.startup_frame_layout_id,new EventsPanel(),getArguments());
+                Toast.makeText(getContext(), "Event added", Toast.LENGTH_SHORT).show();
+                FragmentReplacement.pushFragment(getActivity(), R.id.startup_frame_layout_id, new EventsPanel(), getArguments());
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(),"Error",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Problem with adding new event. Check your internet connection", Toast.LENGTH_SHORT).show();
 
             }
         }) {
@@ -207,15 +211,5 @@ public class AddNewEvent extends Fragment {
             }
         };
         queue.add(request);
-    }
-
-    public static void disableSoftInputFromAppearing(EditText editText) {
-        if (Build.VERSION.SDK_INT >= 11) {
-            editText.setRawInputType(InputType.TYPE_CLASS_TEXT);
-            editText.setTextIsSelectable(true);
-        } else {
-            editText.setRawInputType(InputType.TYPE_NULL);
-            editText.setFocusable(true);
-        }
     }
 }

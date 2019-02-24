@@ -6,7 +6,7 @@ import java.util.List;
 public class User implements Serializable {
 
     Integer id;
-    String login,firstname,lastname;
+    String login, firstname, lastname;
     List<UserGroups> groups;
 
     public User() {
@@ -60,9 +60,10 @@ public class User implements Serializable {
         this.lastname = lastname;
     }
 
-    public String getFullName(){
+    public String getFullName() {
         return getFirstname() + " " + getLastname();
     }
+
     @Override
     public String toString() {
         return "User{" +

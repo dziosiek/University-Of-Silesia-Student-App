@@ -4,7 +4,7 @@ public abstract class GlobalVariables {
 
     private static String API_URL = "http://192.168.1.106:8080";
     private static Integer userId = null;
-    private static String token= null;
+    private static String token = null;
 
     public static String getApiUrl() {
         return API_URL;

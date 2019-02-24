@@ -17,11 +17,11 @@ public class NoGroupAlert extends AppCompatDialogFragment {
 
         builder.setTitle("Find your student's group").setMessage(msg)
                 .setPositiveButton("I understand", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
 
-            }
-        });
+                    }
+                });
         return builder.create();
     }
 }

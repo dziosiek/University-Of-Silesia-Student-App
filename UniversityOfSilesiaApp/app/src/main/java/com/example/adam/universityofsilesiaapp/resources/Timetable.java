@@ -5,7 +5,7 @@ public class Timetable {
     int id, group_id, subgroup;
     String url;
 
-    public Timetable(int id, int group_id, String url,int subgroup) {
+    public Timetable(int id, int group_id, String url, int subgroup) {
         this.id = id;
         this.group_id = group_id;
         this.url = url;

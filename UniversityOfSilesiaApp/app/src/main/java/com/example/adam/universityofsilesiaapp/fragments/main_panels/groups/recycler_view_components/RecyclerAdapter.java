@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.adam.universityofsilesiaapp.R;
 import com.example.adam.universityofsilesiaapp.fragments.main_panels.StudentPanel;
@@ -24,7 +23,7 @@ import java.util.List;
 
 class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
-    TextView specialization,year;
+    TextView specialization, year;
     private ItemClickListener itemClickListener;
 
     public RecyclerViewHolder(@NonNull View itemView) {
@@ -41,21 +40,21 @@ class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClick
 
     @Override
     public void onClick(View v) {
-        itemClickListener.onClick(v,getAdapterPosition(),false);
+        itemClickListener.onClick(v, getAdapterPosition(), false);
     }
 
     @Override
     public boolean onLongClick(View v) {
-        itemClickListener.onClick(v,getAdapterPosition(),true);
+        itemClickListener.onClick(v, getAdapterPosition(), true);
         return true;
     }
 }
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerViewHolder>{
+public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
 
+    User me;
     private List<UserGroups> listData;
     private Context context;
-    User me;
     private int mode;
 
     public RecyclerAdapter(List<UserGroups> listData, Context context, User me) {
@@ -68,44 +67,42 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerViewHolder>{
     @Override
     public RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-        View itemView = inflater.inflate(R.layout.recycler_view_students_groups,viewGroup,false);
+        View itemView = inflater.inflate(R.layout.recycler_view_students_groups, viewGroup, false);
         return new RecyclerViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final RecyclerViewHolder recyclerViewHolder, int i) {
         recyclerViewHolder.specialization.setText(listData.get(i).getSpecialization());
-        recyclerViewHolder.year.setText("year "+listData.get(i).getYear());
+        recyclerViewHolder.year.setText("year " + listData.get(i).getYear());
         recyclerViewHolder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position, boolean isLongClick) {
-                if(isLongClick){
+                if (isLongClick) {
                     UserGroups userGroups = listData.get(position);
-                    if(mode == RecyclerViewMyConstants.MY_GROUPS_MODE){
+                    if (mode == RecyclerViewMyConstants.MY_GROUPS_MODE) {
                         RemovalFromGroupAlert alert = new RemovalFromGroupAlert();
                         alert.setParams
                                 (RecyclerAdapter.this,
-                                RecyclerAdapter.this.me,
-                                RecyclerAdapter.this.listData,
-                                RecyclerAdapter.this.context,
+                                        RecyclerAdapter.this.me,
+                                        RecyclerAdapter.this.listData,
+                                        RecyclerAdapter.this.context,
                                         position);
-                        alert.show(((FragmentActivity) context).getSupportFragmentManager(),"RemovalGroupAlert");
-                    }
-                    else if(mode == RecyclerViewMyConstants.ALL_GROUPS_MODE){
+                        alert.show(((FragmentActivity) context).getSupportFragmentManager(), "RemovalGroupAlert");
+                    } else if (mode == RecyclerViewMyConstants.ALL_GROUPS_MODE) {
                         AddingGroupAlert alert = new AddingGroupAlert();
-                        alert.setParams(context,userGroups.getSpecialization(),
-                                userGroups.getYear(),me.getId(),listData.get(position).getId());
-                        alert.show(((FragmentActivity) context).getSupportFragmentManager(),"AddingGroupAlert");
+                        alert.setParams(context, userGroups.getSpecialization(),
+                                userGroups.getYear(), me.getId(), listData.get(position).getId());
+                        alert.show(((FragmentActivity) context).getSupportFragmentManager(), "AddingGroupAlert");
                     }
-                }
-                else if(mode ==RecyclerViewMyConstants.MY_GROUPS_MODE){
+                } else if (mode == RecyclerViewMyConstants.MY_GROUPS_MODE) {
                     Bundle bundle = new Bundle();
                     me.setGroups(listData);
-                    bundle.putSerializable("me",me);
-                    bundle.putInt("selectedGroup",position);
+                    bundle.putSerializable("me", me);
+                    bundle.putInt("selectedGroup", position);
 //                    Toast.makeText(context,Integer.toString(position),Toast.LENGTH_SHORT).show();
                     FragmentReplacement.pushFragment((Activity) context,
-                            R.id.startup_frame_layout_id, new StudentPanel(),bundle);
+                            R.id.startup_frame_layout_id, new StudentPanel(), bundle);
                 }
             }
         });
@@ -116,16 +113,16 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerViewHolder>{
         return listData.size();
     }
 
-    public void swapItems(List<UserGroups> list, int mode){
+    public void swapItems(List<UserGroups> list, int mode) {
         this.mode = mode;
         this.listData = list;
         notifyDataSetChanged();
     }
 
-    public void removeItem(int position){
+    public void removeItem(int position) {
         listData.remove(position);
         notifyItemRemoved(position);
-        notifyItemRangeChanged(position,listData.size());
+        notifyItemRangeChanged(position, listData.size());
     }
 
 }

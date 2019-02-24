@@ -11,6 +11,10 @@ anim abc_slide_out_bottom
 anim abc_slide_out_top
 anim abc_tooltip_enter
 anim abc_tooltip_exit
+anim enter
+anim exit
+anim pop_enter
+anim pop_exit
 attr actionBarDivider
 attr actionBarItemBackground
 attr actionBarPopupTheme
@@ -366,6 +370,8 @@ attr windowNoTitle
 bool abc_action_bar_embed_tabs
 bool abc_allow_stacked_button_bar
 bool abc_config_actionMenuItemAllCaps
+color WhiteTransparentTextView
+color WhiteTransparentWidget
 color abc_background_cache_hint_selector_material_dark
 color abc_background_cache_hint_selector_material_light
 color abc_btn_colored_borderless_text_material
@@ -405,6 +411,8 @@ color bright_foreground_material_light
 color button_material_dark
 color button_material_light
 color colorAccent
+color colorAccentLight
+color colorBlueDark
 color colorPrimary
 color colorPrimaryDark
 color dim_foreground_disabled_material_dark
@@ -808,6 +816,7 @@ id line1
 id line3
 id listMode
 id list_item
+id loginWidget
 id media_actions
 id message
 id middle
@@ -1281,6 +1290,7 @@ style ThemeOverlay_AppCompat_Dark_ActionBar
 style ThemeOverlay_AppCompat_Dialog
 style ThemeOverlay_AppCompat_Dialog_Alert
 style ThemeOverlay_AppCompat_Light
+style WhiteWidget
 style Widget_AppCompat_ActionBar
 style Widget_AppCompat_ActionBar_Solid
 style Widget_AppCompat_ActionBar_TabBar
@@ -1356,6 +1366,7 @@ style Widget_AppCompat_Toolbar_Button_Navigation
 style Widget_Compat_NotificationActionContainer
 style Widget_Compat_NotificationActionText
 style Widget_Support_CoordinatorLayout
+style textField
 styleable ActionBar background backgroundSplit backgroundStacked contentInsetEnd contentInsetEndWithActions contentInsetLeft contentInsetRight contentInsetStart contentInsetStartWithNavigation customNavigationLayout displayOptions divider elevation height hideOnContentScroll homeAsUpIndicator homeLayout icon indeterminateProgressStyle itemPadding logo navigationMode popupTheme progressBarPadding progressBarStyle subtitle subtitleTextStyle title titleTextStyle
 styleable ActionBarLayout android_layout_gravity
 styleable ActionMenuItemView android_minWidth
@@ -1407,3 +1418,4 @@ styleable Toolbar android_gravity android_minHeight buttonGravity collapseConten
 styleable View android_theme android_focusable paddingEnd paddingStart theme
 styleable ViewBackgroundHelper android_background backgroundTint backgroundTintMode
 styleable ViewStubCompat android_id android_layout android_inflatedId
+xml network_security_config

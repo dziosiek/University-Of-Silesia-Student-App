@@ -3,4 +3,9 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="colorAccentLight">#7ED81B60</color>
+    <color name="colorBlueDark">#7E1B3AD8</color>
+    <color name="WhiteTransparentWidget">#9AFFFFFF</color>
+    <color name="WhiteTransparentTextView">#5EFFFFFF</color>
+
 </resources>

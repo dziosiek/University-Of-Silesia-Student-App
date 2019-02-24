@@ -18,5 +18,13 @@
         <!--<item name="android:backgroundDimEnabled">false</item>-->
         <!--<item name="android:background">@drawable/dialog_border</item>-->
     </style>
+    <style name="WhiteWidget">
+        <item name="android:background">@color/WhiteTransparentWidget</item>
+
+    </style>
+    <style name="textField">
+
+    </style>
+    
 
 </resources>

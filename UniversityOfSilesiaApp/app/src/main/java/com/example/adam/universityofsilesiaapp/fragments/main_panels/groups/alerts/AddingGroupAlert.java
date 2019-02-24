@@ -16,7 +16,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.adam.universityofsilesiaapp.fragments.main_panels.groups.Groups;
 import com.example.adam.universityofsilesiaapp.variables.GlobalVariables;
 
 import org.json.JSONObject;
@@ -67,7 +66,7 @@ public class AddingGroupAlert extends AppCompatDialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Joining to group").setMessage("Would you like to join to the group:\n"
-                +getSpecialization()+", year "+getYear())
+                + getSpecialization() + ", year " + getYear())
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -103,7 +102,7 @@ public class AddingGroupAlert extends AppCompatDialogFragment {
                         if (networkResponse != null && networkResponse.statusCode == 409) {
                             Toast.makeText(context, "You are currently in this group", Toast.LENGTH_SHORT).show();
                         } else if (networkResponse != null && networkResponse.statusCode == 400) {
-                            Toast.makeText(context, "400", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(context, "400", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }) {

@@ -34,7 +34,8 @@ public class EventDetailsDialog extends DialogFragment {
     String title, desc, date, addedBy;
     RecyclerAdapter recyclerAdapter;
     int position, eventId, groupId;
-    public void setParams(String title, String desc, String date, String addedBy, int position, int eventId, int groupId){
+
+    public void setParams(String title, String desc, String date, String addedBy, int position, int eventId, int groupId) {
         this.title = title;
         this.desc = desc;
         this.date = date;
@@ -96,7 +97,7 @@ public class EventDetailsDialog extends DialogFragment {
                     public void onErrorResponse(VolleyError error) {
 
                     }
-                }){
+                }) {
                     @Override
                     public Map<String, String> getHeaders() throws AuthFailureError {
                         Map<String, String> headers = new HashMap<>();
